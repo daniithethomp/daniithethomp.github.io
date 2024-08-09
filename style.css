@@ -1,0 +1,129 @@
+:root {
+    --background-color: rgb(61, 61, 61);
+    --secondary-color: rgb(48, 48, 48);
+    --pink-color: rgb(216, 71, 216);
+    --orange-color: rgb(255, 196, 0);
+    --blue-color: rgb(81, 156, 255);
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+#recent-projects {
+    height: 60vh;
+    background-color: var(--secondary-color);
+}
+
+#project-list-flex {
+    display: flex;
+    height: 54vh;
+    justify-content: space-around;
+    overflow-x:scroll;
+    max-width: 100%;
+    align-items: center;
+}
+
+.project {
+    min-width: 400px;
+    margin: 1rem;
+    height: 49vh;
+}
+
+.project-preview:hover {
+    cursor: pointer;
+    transform: translateY(-20px);
+    transition: 0.3s ease-in-out;
+}
+
+.project-preview {
+    background-color:antiquewhite;
+    color: black;
+    height: 300px;
+    width: 400px;
+    display: block;
+    transition: 0.3s ease-in-out;
+}
+
+section h2 {
+    text-align: center;
+    padding: 1rem;
+    color: var(--orange-color);
+    grid-row: 1;
+}
+
+.project {
+    text-decoration: none;
+    color: white;
+}
+
+.project-type {
+    color: var(--pink-color);
+    font-weight: 700;
+    
+}
+
+.project-title {
+    color: var(--blue-color);
+}
+
+/* header */
+#pink {
+    width: 55px;
+    height: 30px;
+    background-color: rgb(216, 71, 216,0.7);;
+}
+
+#blue {
+    width: 55px;
+    height: 30px;
+    background-color: rgb(81, 156, 255,0.7);
+    transform: translate(30px, -36px);
+}
+
+#orange {
+    width: 55px;
+    height: 30px;
+    background-color: rgb(255, 196, 0, 0.7);
+    transform: translate(15px, -18px);
+}
+
+#logo {
+    display: block;
+    margin: 1rem;
+    width: 84px;
+    height: 54px;
+}
+
+#logo-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+#links {
+    display: flex;
+    justify-content: center;
+}
+
+#links a {
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    text-decoration: none;
+    color: white;
+}
+
+.link-logo {
+    width: auto;
+    height: 25px;
+    padding: 0 1rem 0 0 ;
+}
