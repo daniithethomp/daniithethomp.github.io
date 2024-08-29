@@ -25,3 +25,65 @@
         </div>
     </header>
     <main>
+        <section id="project-wrapper">
+            <h1>Sarah's Go With The Flow Yoga</h1>
+            <a href="https://sarahsgowiththeflowyoga.com" target="_blank">Visit Site</a>
+            <p>A full stack website that allows yoga classes and courses to be posted by an admin user and students to book and pay for these classes.</p>
+            <div id="feat-and-tech">
+                <article>
+                    <h2>Features</h2>
+                    <ul>
+                        <li>Admin Management</li>
+                        <li>Class creation</li>
+                        <li>Online payments through Stripe</li>
+                        <li>Email confirmation of bookings</li>
+                        <li>Booking management</li>
+                        <li>Email contact form</li>
+                    </ul>
+                </article>
+                <article>
+                    <h2>Technologies</h2>
+                    <ul>
+                        <li>Python</li>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>Flask</li>
+                        <li>SMTP</li>
+                        <li>Stripe API</li>
+                        <li>Render web hosting</li>
+                    </ul>
+                </article>
+            </div>
+            <div>
+                <p>The website was designed to be simplistic and minimalistic so that the user feels calm and not overwhelmed when browsing the page.</p>
+                <figure style="background-color: var(--dark-pink-color); width:100%;padding:1rem 0;">
+                    <img src="yogawebsite/home-page.png" style="height:400px; margin: auto;display:block; border: black 2px solid">
+                    <figcaption>Website Home Page (To be updated)</figcaption>
+                </figure>
+                <p>The home page displays information about the Yoga Instructor and their studio at the request of the business owner.</p>
+                <figure>
+                    <img src="yogawebsite/classes-page.png" style="height:400px;">
+                    <figcaption>Classes Page</figcaption>
+                </figure>
+                <p>The classes page displays a list of all future classes that the instructor has posted and displays basic information about each class. The user can then click on a class to view more information and to book the class.</p>
+                <figure>
+                    <img src="yogawebsite/book-class.png" style="height:400px;">
+                    <figcaption>Book Class Page</figcaption>
+                </figure>
+                <p>Displays the full information of the class (date, time, duration, price) and the instructor set description. It then allows a user to enter their email address to be taken to the payment portal</p>
+                <figure>
+                    <img src="yogawebsite/stripe-checkout.png" style="height:400px;">
+                    <figcaption>Stripe Payment Portal</figcaption>
+                </figure>
+                <p>Payments are taken through Stripe which upon completion uses a webhook to fulfill the booking (add the booking to the database and email the user information about their order).</p>
+                <p>The email has both HTML and plain text versions depending on what the email supports, and is sent via SMTP.</p>
+                <figure>
+                    <img src="yogawebsite/contact-form.png" style="height:400px;">
+                    <figcaption>Contact Form Page</figcaption>
+                </figure>
+                <p>The contact form sends an email to the business owner with the user's inputted name, email and message so that they can contact the user.</p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

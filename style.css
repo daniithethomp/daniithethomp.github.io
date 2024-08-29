@@ -5,6 +5,7 @@
     --orange-color: rgb(255, 196, 0);
     --blue-color: rgb(81, 156, 255);
     --dark-orange-color: rgb(210, 141, 3);
+    --dark-pink-color: rgb(216, 71, 216,0.7);
     font-family: 'Space Mono', 'Courier New', Courier, monospace;
 }
 
@@ -17,7 +18,7 @@
 #pink {
     width: 55px;
     height: 30px;
-    background-color: rgb(216, 71, 216,0.7);;
+    background-color: var(--dark-pink-color);
 }
 
 #blue {
@@ -121,6 +122,11 @@ body {
     transition: 0.3s ease-in-out;
 }
 
+.project img{
+    height: 300px;
+    width: 400px;
+}
+
 section h2 {
     text-align: center;
     padding: 1rem;
@@ -169,7 +175,7 @@ section h2 {
     justify-content: space-around;
     width: 100%;
     background-color: rgb(255, 196, 0, 0.7);
-    padding: 1rem;
+    padding: 1rem 0;
 }
 
 #feat-and-tech article {
@@ -180,4 +186,27 @@ section h2 {
 
 #feat-and-tech article h2 {
     color: white;
+}
+
+figcaption {
+    text-align: center;
+}
+
+figure img {
+    height: 400px;
+    margin: auto;
+    display: block;
+    border: black 2px solid;
+}
+
+figure {
+    background-color: var(--dark-pink-color);
+    width: 100%;
+    padding: 1rem 0;
+}
+
+#project-wrapper a {
+    color: white;
+    text-decoration: underline;
+    font-weight: 800;
 }
