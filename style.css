@@ -4,6 +4,7 @@
     --pink-color: rgb(216, 71, 216);
     --orange-color: rgb(255, 196, 0);
     --blue-color: rgb(81, 156, 255);
+    --dark-orange-color: rgb(210, 141, 3);
     font-family: 'Space Mono', 'Courier New', Courier, monospace;
 }
 
@@ -12,11 +13,70 @@
     margin: 0;
 }
 
-body {
-    background-color: var(--background-color);
-    scroll-snap-type: y mandatory;
+/* header */
+#pink {
+    width: 55px;
+    height: 30px;
+    background-color: rgb(216, 71, 216,0.7);;
 }
 
+#blue {
+    width: 55px;
+    height: 30px;
+    background-color: rgb(81, 156, 255,0.7);
+    transform: translate(30px, -36px);
+}
+
+#orange {
+    width: 55px;
+    height: 30px;
+    background-color: rgb(255, 196, 0, 0.7);
+    transform: translate(15px, -18px);
+}
+
+#logo {
+    display: block;
+    margin: 1rem;
+    width: 84px;
+    height: 54px;
+}
+
+#logo-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+#links {
+    display: flex;
+    justify-content: center;
+}
+
+#links a, #links span {
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    text-decoration: none;
+    color: white;
+}
+
+.link-logo {
+    width: auto;
+    height: 25px;
+    padding: 0 1rem 0 0 ;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+/* recent projects */
 #recent-projects {
     height: fit-content;
     background-color: var(--secondary-color);
@@ -37,7 +97,7 @@ body {
 }
 
 #project-list-flex::-webkit-scrollbar-thumb {
-    background: rgb(210, 141, 3);
+    background: var(--dark-orange-color);
 }
 
 .project {
@@ -83,57 +143,41 @@ section h2 {
     color: var(--blue-color);
 }
 
-/* header */
-#pink {
-    width: 55px;
-    height: 30px;
-    background-color: rgb(216, 71, 216,0.7);;
+/* project pages */
+#project-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-color);
+    color: white;
+    width: 100%;
 }
 
-#blue {
-    width: 55px;
-    height: 30px;
-    background-color: rgb(81, 156, 255,0.7);
-    transform: translate(30px, -36px);
+#project-wrapper h1 {
+    color: var(--blue-color);
+    padding: 1rem;
 }
 
-#orange {
-    width: 55px;
-    height: 30px;
-    background-color: rgb(255, 196, 0, 0.7);
-    transform: translate(15px, -18px);
+#project-wrapper p {
+    padding: 1rem;
 }
 
-#logo {
-    display: block;
-    margin: 1rem;
-    width: 84px;
-    height: 54px;
-}
-
-#logo-flex {
+#feat-and-tech {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    width: 100%;
+    background-color: rgb(255, 196, 0, 0.7);
+    padding: 1rem;
+}
+
+#feat-and-tech article {
+    width: 50%;
+    padding: 1rem;
+    list-style-position: inside;
+}
+
+#feat-and-tech article h2 {
     color: white;
-}
-
-#links {
-    display: flex;
-    justify-content: center;
-}
-
-#links a {
-    display: flex;
-    align-items: center;
-    margin: 1rem;
-    text-decoration: none;
-    color: white;
-}
-
-.link-logo {
-    width: auto;
-    height: 25px;
-    padding: 0 1rem 0 0 ;
 }
