@@ -167,13 +167,18 @@ section h2 {
 
 #project-wrapper p {
     padding: 1rem;
+    width: 80%;
+    min-width: 600px;
+    margin: auto;
+    text-align: justify;
 }
 
 #feat-and-tech {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    width: 100%;
+    width: 80%;
+    min-width: 600px;
     background-color: rgb(255, 196, 0, 0.7);
     padding: 1rem 0;
 }
@@ -201,7 +206,9 @@ figure img {
 
 figure {
     background-color: var(--dark-pink-color);
-    width: 100%;
+    width: 80%;
+    min-width: 600px;
+    margin: auto;
     padding: 1rem 0;
 }
 

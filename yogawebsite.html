@@ -26,7 +26,7 @@
     </header>
     <main>
         <section id="project-wrapper">
-            <h1>Sarah's Go With The Flow Yoga</h1>
+            <h1 id="top">Sarah's Go With The Flow Yoga</h1>
             <a href="https://sarahsgowiththeflowyoga.com" target="_blank">Visit Site</a>
             <p>A full stack website that allows yoga classes and courses to be posted by an admin user and students to book and pay for these classes.</p>
             <div id="feat-and-tech">
@@ -48,6 +48,7 @@
                         <li>HTML</li>
                         <li>CSS</li>
                         <li>Flask</li>
+                        <li>Jinja</li>
                         <li>SMTP</li>
                         <li>Stripe API</li>
                         <li>Render web hosting</li>
@@ -55,12 +56,12 @@
                 </article>
             </div>
             <div>
-                <p>The website was designed to be simplistic and minimalistic so that the user feels calm and not overwhelmed when browsing the page.</p>
-                <figure style="background-color: var(--dark-pink-color); width:100%;padding:1rem 0;">
-                    <img src="yogawebsite/home-page.png" style="height:400px; margin: auto;display:block; border: black 2px solid">
+                <p>The website was designed to be simplistic and minimalistic so that the user feels calm and not overwhelmed when browsing the page. The website was designed with desktop use in mind, but mobile design has also been considered with breakpoints in the CSS when the screen size is small. Every page on the website is accessible within 3 clicks to make sure that it is easy to navigate.</p>
+                <figure>
+                    <img src="yogawebsite/home-page.png" >
                     <figcaption>Website Home Page (To be updated)</figcaption>
                 </figure>
-                <p>The home page displays information about the Yoga Instructor and their studio at the request of the business owner.</p>
+                <p>The home page displays information about the Yoga Instructor and their studio at the request of the business owner. The animation displayed upon loading the home page was created purely using CSS.</p>
                 <figure>
                     <img src="yogawebsite/classes-page.png" style="height:400px;">
                     <figcaption>Classes Page</figcaption>
@@ -70,18 +71,22 @@
                     <img src="yogawebsite/book-class.png" style="height:400px;">
                     <figcaption>Book Class Page</figcaption>
                 </figure>
-                <p>Displays the full information of the class (date, time, duration, price) and the instructor set description. It then allows a user to enter their email address to be taken to the payment portal</p>
+                <p>Displays the full information of the class (date, time, duration, price) and the instructor set description. It then allows a user to enter their email address to be taken to the payment portal. The price of the class is retrieved by making an API call using the price ID of the Stripe product.</p>
                 <figure>
                     <img src="yogawebsite/stripe-checkout.png" style="height:400px;">
                     <figcaption>Stripe Payment Portal</figcaption>
                 </figure>
                 <p>Payments are taken through Stripe which upon completion uses a webhook to fulfill the booking (add the booking to the database and email the user information about their order).</p>
-                <p>The email has both HTML and plain text versions depending on what the email supports, and is sent via SMTP.</p>
+                <p>When adding bookings to the database a transaction is started to ensure database integrity.</p>
+                <p>The email has both HTML and plain text versions depending on what the email supports, and is sent via SMTP using python's SMTPlib and email libraries.</p>
                 <figure>
                     <img src="yogawebsite/contact-form.png" style="height:400px;">
                     <figcaption>Contact Form Page</figcaption>
                 </figure>
-                <p>The contact form sends an email to the business owner with the user's inputted name, email and message so that they can contact the user.</p>
+                <p>The contact form sends an email to the business owner with the user's input name, email and message so that they can contact the user. This again uses pythons SMTP and email libraries to send the email over SMTP.</p>
+                <p>Admins can create classes by manually inputting the title, description, time, date, length, number of available spaces and the Stripe product price ID. These classes can then be edited to change any details that need to be changed.</p>
+                <p>On the same page that you edit a class, admins can also view the emails of those who have booked the class and delete or manually create bookings as they need.</p>
+                <p>To host the website I used Render as it allows for automatic deployment using Github, custom environment variables, ssh and shell connection, persistent disks and one off jobs. It is also very simple to use and is well documented.</p>
             </div>
         </section>
     </main>
