@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Link, Image, Text, Heading, VStack } from '@chakra-ui/react';
+import { Flex, HStack, Link, Image, Text, Heading, VStack } from '@chakra-ui/react';
 
 export default function Header() {
   return (
@@ -13,11 +13,7 @@ export default function Header() {
       >
         <Link href="/" _hover={{ textDecoration: 'none' }}>
           <HStack spacing={4}>
-            <Flex id="logo" position="relative" boxSize="50px">
-              <Box id="pink" position="absolute" top="0" left="0" w="50%" h="50%" bg="#ff6fb1" borderRadius="8px" />
-              <Box id="orange" position="absolute" top="25%" left="10%" w="50%" h="50%" bg="#ff9f45" borderRadius="8px" />
-              <Box id="blue" position="absolute" top="50%" left="20%" w="50%" h="50%" bg="#6bd5ff" borderRadius="8px" />
-            </Flex>
+            <Image boxSize="100px" src="logo-500.png" alt="Danii Thompson Logo" />
             <Heading size="lg" letterSpacing="tight">Danii Thompson</Heading>
           </HStack>
         </Link>
