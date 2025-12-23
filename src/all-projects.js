@@ -14,17 +14,32 @@ import {
   Stack,
   Divider,
   Tag,
-  Input,
-  Select,
-  Checkbox,
-  CheckboxGroup,
   Wrap,
   WrapItem,
   Collapse,
-  IconButton
+  IconButton,
+  Badge,
+  Button,
+  Input,
+  RadioGroup,
+  Radio,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
+  useDisclosure,
+  CheckboxGroup,
+  Checkbox,
 } from '@chakra-ui/react';
 
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Filter } from 'lucide-react';
 
 const projects = [
   {
@@ -78,6 +93,7 @@ const projects = [
     tags: ['Command-Line Application', 'Haskell'],
   },
   {
+    href: 'https://github.com/daniithethomp/f1analytics',
     title: 'F1 Data Analytics',
     type: 'Hackathon Project',
     desc: 'A data analytics project that analyses historical Formula 1 data to uncover insights and trends, using data cleaning, transformation, and visualisation techniques to present findings.',
@@ -111,93 +127,126 @@ const projects = [
   },
 ];
 
+// Category mapper for tags
+function categorizeTag(tag) {
+  const t = tag.toLowerCase();
+  if (['web-application', 'desktop application', 'mobile application', 'command-line application'].includes(t)) return 'Application Type';
+  if (['java', 'kotlin', 'python', 'haskell', 'ruby'].includes(t)) return 'Language';
+  if (['rails', 'flask', 'springboot', 'jogl', 'ros2', 'compose', 'streamlit','swing'].includes(t)) return 'Frameworks';
+  if (['postgresql', 'mysql', 'sqlite'].includes(t)) return 'Databases';
+  if (['numpy', 'pandas', 'matplotlib'].includes(t)) return 'Libraries';
+  if (['cryptography', 'computer graphics', 'data analytics', 'machine learning', 'robotics'].includes(t)) return 'Domain';
+  return 'Other';
+}
+
 export default function AllProjects() {
-  // Filters - moved inside component
+  // Filters
   const [query, setQuery] = useState('');
   const [type, setType] = useState('all');
   const [selectedTags, setSelectedTags] = useState([]);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isProjectsOpen, setIsProjectsOpen] = useState(true);
+
+  const { isOpen: isFilterOpen, onOpen: openFilters, onClose: closeFilters } = useDisclosure();
 
   const allTags = useMemo(
     () => Array.from(new Set(projects.flatMap((p) => p.tags))).sort(),
     []
   );
 
+  const tagCategories = useMemo(() => {
+    const buckets = {
+      'Application Type': [],
+      Language: [],
+      Frameworks: [],
+      Databases: [],
+      Libraries: [],
+      Domain: [],
+      Other: [],
+    };
+    allTags.forEach((t) => {
+      buckets[categorizeTag(t)].push(t);
+    });
+    Object.keys(buckets).forEach((k) => buckets[k].sort());
+    return buckets;
+  }, [allTags]);
+
+  const activeFilterCount = useMemo(() => {
+    let n = 0;
+    if (query.trim()) n += 1;
+    if (type !== 'all') n += 1;
+    n += selectedTags.length;
+    return n;
+  }, [query, type, selectedTags]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return projects.filter((p) => {
       const matchesQuery =
-        q.length === 0 ||
-        p.title.toLowerCase().includes(q) ||
-        p.desc.toLowerCase().includes(q);
+        !q || p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
       const matchesType = type === 'all' || p.type === type;
       const matchesTags =
-        selectedTags.length === 0 ||
-        selectedTags.every((t) => p.tags.includes(t));
+        selectedTags.length === 0 || selectedTags.every((t) => p.tags.includes(t));
       return matchesQuery && matchesType && matchesTags;
     });
   }, [query, type, selectedTags]);
 
+  const clearAll = () => {
+    setQuery('');
+    setType('all');
+    setSelectedTags([]);
+  };
+
   return (
     <Box bg="#0b0c10" color="white" px={{ base: 4, md: 10 }} py={8}>
       <VStack align="stretch" spacing={4}>
-        <HStack justify="space-between" cursor="pointer" onClick={() => setIsOpen(!isOpen)}>
+        <HStack justify="space-between">
           <Heading size="md" letterSpacing="wide">My Projects</Heading>
-          <IconButton
-            icon={<ChevronRight />}
-            variant="ghost"
-            colorScheme="whiteAlpha"
-            size="sm"
-            aria-label="Toggle Projects"
-            transform={isOpen ? 'rotate(90deg)' : 'rotate(0deg)'}
-            transition="transform 0.2s"
-          />
+          <HStack>
+            <Box position="relative">
+              <IconButton
+                aria-label="Open filters"
+                icon={<Filter />}
+                variant="ghost"
+                colorScheme="whiteAlpha"
+                onClick={openFilters}
+              />
+              {activeFilterCount > 0 && (
+                <Badge
+                  position="absolute"
+                  top="-6px"
+                  right="-6px"
+                  colorScheme="pink"
+                  borderRadius="full"
+                >
+                  {activeFilterCount}
+                </Badge>
+              )}
+            </Box>
+            <IconButton
+              icon={<ChevronRight />}
+              variant="ghost"
+              colorScheme="whiteAlpha"
+              size="sm"
+              aria-label="Toggle Projects"
+              onClick={() => setIsProjectsOpen(!isProjectsOpen)}
+              transform={isProjectsOpen ? 'rotate(90deg)' : 'rotate(0deg)'}
+              transition="transform 0.2s"
+            />
+          </HStack>
         </HStack>
+
         <Divider borderColor="whiteAlpha.300" />
 
-        <Collapse in={isOpen} animateOpacity>
+        <Collapse in={isProjectsOpen} animateOpacity>
+          <Input
+            placeholder="Search title or description"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            bg="whiteAlpha.100"
+            _placeholder={{ color: 'whiteAlpha.600' }}
+          />
+
           <VStack align="stretch" spacing={4}>
-            {/* Filters */}
-            <VStack align="stretch" spacing={3}>
-              <Flex gap={3} direction={{ base: 'column', md: 'row' }}>
-                <Input
-                  placeholder="Search title or description"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  bg="whiteAlpha.100"
-                  _placeholder={{ color: 'whiteAlpha.600' }}
-                />
-                <Select
-                  maxW={{ md: '260px' }}
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
-                  bg="whiteAlpha.100"
-                >
-                  <option value="all">All types</option>
-                  <option value="Personal Project">Personal Project</option>
-                  <option value="Client Project">Client Project</option>
-                  <option value="Academic Project">Academic Project</option>
-                  <option value="Hackathon Project">Hackathon Project</option>
-                </Select>
-              </Flex>
-
-              <CheckboxGroup
-                colorScheme="teal"
-                value={selectedTags}
-                onChange={(vals) => setSelectedTags(vals)}
-              >
-                <Wrap pb={2}>
-                  {allTags.map((t) => (
-                    <WrapItem key={t}>
-                      <Checkbox value={t} size="sm">
-                        {t}
-                      </Checkbox>
-                    </WrapItem>
-                  ))}
-                </Wrap>
-              </CheckboxGroup>
-            </VStack>
-
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
               {filtered.map((p) => {
                 const isExternal = /^https?:\/\//.test(p.href || '');
@@ -217,7 +266,7 @@ export default function AllProjects() {
                       <VStack align="stretch" spacing={3}>
                         {p.imgSrc && (
                           <Flex justify="center">
-                            <Image src={p.imgSrc} alt={p.title} borderRadius="md" objectFit="cover" boxSize='50%' />
+                            <Image src={p.imgSrc} alt={p.title} borderRadius="md" objectFit="cover" boxSize="50%" />
                           </Flex>
                         )}
                         <Stack spacing={1}>
@@ -251,6 +300,86 @@ export default function AllProjects() {
           </VStack>
         </Collapse>
       </VStack>
+
+      {/* Filters Drawer */}
+      <Drawer isOpen={isFilterOpen} placement="right" onClose={closeFilters} size="md">
+        <DrawerOverlay />
+        <DrawerContent bg="#0b0c10" color="white">
+          <DrawerHeader borderBottomWidth="1px" borderColor="whiteAlpha.200">
+            Filters
+          </DrawerHeader>
+          <DrawerBody>
+            <Accordion allowMultiple defaultIndex={[0, 1]}>
+              {/* Type */}
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box as="span" flex="1" textAlign="left">Project type</Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel>
+                  <RadioGroup value={type} onChange={setType}>
+                    <VStack align="start" spacing={2}>
+                      <Radio value="all">All types</Radio>
+                      <Radio value="Personal Project">Personal Project</Radio>
+                      <Radio value="Client Project">Client Project</Radio>
+                      <Radio value="Academic Project">Academic Project</Radio>
+                      <Radio value="Hackathon Project">Hackathon Project</Radio>
+                    </VStack>
+                  </RadioGroup>
+                </AccordionPanel>
+              </AccordionItem>
+
+              {/* Tags */}
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box as="span" flex="1" textAlign="left">Tags</Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel>
+                  <CheckboxGroup value={selectedTags} onChange={setSelectedTags} colorScheme="teal">
+                    <Accordion allowMultiple>
+                      {Object.entries(tagCategories).map(([cat, tags]) =>
+                        tags.length ? (
+                          <AccordionItem key={cat} border="none">
+                            <h3>
+                              <AccordionButton px={0}>
+                                <Box as="span" flex="1" textAlign="left" fontWeight="semibold">
+                                  {cat}
+                                </Box>
+                                <AccordionIcon />
+                              </AccordionButton>
+                            </h3>
+                            <AccordionPanel px={0}>
+                              <Wrap>
+                                {tags.map((t) => (
+                                  <WrapItem key={t}>
+                                    <Tag as="label" variant="solid" colorScheme="teal" cursor="pointer">
+                                      <Checkbox value={t} size="sm" mr={2} />
+                                      {t}
+                                    </Tag>
+                                  </WrapItem>
+                                ))}
+                              </Wrap>
+                            </AccordionPanel>
+                          </AccordionItem>
+                        ) : null
+                      )}
+                    </Accordion>
+                  </CheckboxGroup>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+          </DrawerBody>
+          <DrawerFooter borderTopWidth="1px" borderColor="whiteAlpha.200" gap={3}>
+            <Button variant="outline" colorScheme="teal" onClick={clearAll}>Clear all</Button>
+            <Button colorScheme="teal" onClick={closeFilters}>Done</Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </Box>
   );
 }
