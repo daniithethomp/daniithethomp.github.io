@@ -6,11 +6,14 @@ import Header from './header.js';
 
 function App() {
   return (
-    <Box bg="#0b0c10" color="white" minH="100vh" px={{ base: 4, md: 10 }} py={8}>
-      <Header />
+    <Box bg="black" color="white" minH="100vh">
+      <Box px={{ base: 4, md: 10 }} py={8}>
+        <Header />
+      </Box>
       <AboutMe />
-      {/* Projects */}
-      <AllProjects />
+      <Box px={{ base: 4, md: 10 }} py={8}>
+        <AllProjects />
+      </Box>
     </Box>
   );
 }

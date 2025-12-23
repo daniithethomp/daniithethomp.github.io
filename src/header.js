@@ -6,14 +6,14 @@ export default function Header() {
         as="header"
         justify="space-between"
         align="center"
-        mb={10}
         gap={6}
         flexWrap="wrap"
         direction={{ base: 'column', md: 'row' }}
+        height="fit-content"
       >
         <Link href="/" _hover={{ textDecoration: 'none' }}>
           <HStack spacing={4}>
-            <Image boxSize="100px" src="logo-500.png" alt="Danii Thompson Logo" />
+            <Image boxSize="50px" src="logo-500.png" alt="Danii Thompson Logo" />
             <Heading size="lg" letterSpacing="tight">Danii Thompson</Heading>
           </HStack>
         </Link>

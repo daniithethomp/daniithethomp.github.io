@@ -132,7 +132,7 @@ function categorizeTag(tag) {
   const t = tag.toLowerCase();
   if (['web-application', 'desktop application', 'mobile application', 'command-line application'].includes(t)) return 'Application Type';
   if (['java', 'kotlin', 'python', 'haskell', 'ruby'].includes(t)) return 'Language';
-  if (['rails', 'flask', 'springboot', 'jogl', 'ros2', 'compose', 'streamlit','swing'].includes(t)) return 'Frameworks';
+  if (['rails', 'flask', 'springboot', 'jogl', 'ros2', 'compose', 'streamlit','swing','android'].includes(t)) return 'Frameworks';
   if (['postgresql', 'mysql', 'sqlite'].includes(t)) return 'Databases';
   if (['numpy', 'pandas', 'matplotlib'].includes(t)) return 'Libraries';
   if (['cryptography', 'computer graphics', 'data analytics', 'machine learning', 'robotics'].includes(t)) return 'Domain';
@@ -197,109 +197,107 @@ export default function AllProjects() {
   };
 
   return (
-    <Box bg="#0b0c10" color="white" px={{ base: 4, md: 10 }} py={8}>
-      <VStack align="stretch" spacing={4}>
-        <HStack justify="space-between">
-          <Heading size="md" letterSpacing="wide">My Projects</Heading>
-          <HStack>
-            <Box position="relative">
-              <IconButton
-                aria-label="Open filters"
-                icon={<Filter />}
-                variant="ghost"
-                colorScheme="whiteAlpha"
-                onClick={openFilters}
-              />
-              {activeFilterCount > 0 && (
-                <Badge
-                  position="absolute"
-                  top="-6px"
-                  right="-6px"
-                  colorScheme="pink"
-                  borderRadius="full"
-                >
-                  {activeFilterCount}
-                </Badge>
-              )}
-            </Box>
+    <VStack align="stretch" spacing={4}>
+      <HStack justify="space-between" onClick={() => setIsProjectsOpen(!isProjectsOpen)} cursor="pointer">
+        <Heading size="md" letterSpacing="wide">My Projects</Heading>
+        <HStack>
+          <Box position="relative">
             <IconButton
-              icon={<ChevronRight />}
+              aria-label="Open filters"
+              icon={<Filter />}
               variant="ghost"
               colorScheme="whiteAlpha"
-              size="sm"
-              aria-label="Toggle Projects"
-              onClick={() => setIsProjectsOpen(!isProjectsOpen)}
-              transform={isProjectsOpen ? 'rotate(90deg)' : 'rotate(0deg)'}
-              transition="transform 0.2s"
+              onClick={openFilters}
             />
-          </HStack>
-        </HStack>
-
-        <Divider borderColor="whiteAlpha.300" />
-
-        <Collapse in={isProjectsOpen} animateOpacity>
-          <Input
-            placeholder="Search title or description"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            bg="whiteAlpha.100"
-            _placeholder={{ color: 'whiteAlpha.600' }}
-          />
-
-          <VStack align="stretch" spacing={4}>
-            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-              {filtered.map((p) => {
-                const isExternal = /^https?:\/\//.test(p.href || '');
-                return (
-                  <Card
-                    key={p.title}
-                    as={p.href ? Link : Box}
-                    href={p.href}
-                    isExternal={isExternal}
-                    _hover={{ transform: 'translateY(-4px)', boxShadow: 'xl', textDecoration: 'none' }}
-                    transition="all 0.2s ease"
-                    bg="whiteAlpha.50"
-                    border="1px solid"
-                    borderColor="whiteAlpha.200"
-                  >
-                    <CardBody>
-                      <VStack align="stretch" spacing={3}>
-                        {p.imgSrc && (
-                          <Flex justify="center">
-                            <Image src={p.imgSrc} alt={p.title} borderRadius="md" objectFit="cover" boxSize="50%" />
-                          </Flex>
-                        )}
-                        <Stack spacing={1}>
-                          <Heading size="md" color="whiteAlpha.800">{p.title}</Heading>
-                          <Tag w="fit-content" colorScheme="orange" variant="subtle">
-                            {p.type}
-                          </Tag>
-                          <Text color="whiteAlpha.800" fontSize="sm">
-                            {p.desc}
-                          </Text>
-                          <Wrap pt={1}>
-                            {p.tags?.map((t) => (
-                              <WrapItem key={t}>
-                                <Tag size="sm" variant="outline" colorScheme="teal">
-                                  {t}
-                                </Tag>
-                              </WrapItem>
-                            ))}
-                          </Wrap>
-                        </Stack>
-                      </VStack>
-                    </CardBody>
-                  </Card>
-                );
-              })}
-            </SimpleGrid>
-
-            {filtered.length === 0 && (
-              <Text color="whiteAlpha.700" fontStyle="italic">No projects match your filters.</Text>
+            {activeFilterCount > 0 && (
+              <Badge
+                position="absolute"
+                top="-6px"
+                right="-6px"
+                colorScheme="pink"
+                borderRadius="full"
+              >
+                {activeFilterCount}
+              </Badge>
             )}
-          </VStack>
-        </Collapse>
-      </VStack>
+          </Box>
+          <IconButton
+            icon={<ChevronRight />}
+            variant="ghost"
+            colorScheme="whiteAlpha"
+            size="sm"
+            aria-label="Toggle Projects"
+            transform={isProjectsOpen ? 'rotate(90deg)' : 'rotate(0deg)'}
+            transition="transform 0.2s"
+          />
+        </HStack>
+      </HStack>
+
+      <Divider borderColor="whiteAlpha.300" />
+
+      <Collapse in={isProjectsOpen} animateOpacity>
+        {/* Search stays outside Collapse */}
+        <Input
+          placeholder="Search title or description"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          bg="whiteAlpha.100"
+          _placeholder={{ color: 'whiteAlpha.600' }}
+          mb={4}
+        />
+        <VStack align="stretch" spacing={4}>
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
+            {filtered.map((p) => {
+              const isExternal = /^https?:\/\//.test(p.href || '');
+              return (
+                <Card
+                  key={p.title}
+                  as={p.href ? Link : Box}
+                  href={p.href}
+                  isExternal={isExternal}
+                  _hover={{ transform: 'translateY(-4px)', boxShadow: 'xl', textDecoration: 'none' }}
+                  transition="all 0.2s ease"
+                  bg="whiteAlpha.50"
+                  border="1px solid"
+                  borderColor="whiteAlpha.200"
+                >
+                  <CardBody>
+                    <VStack align="stretch" spacing={3}>
+                      {p.imgSrc && (
+                        <Flex justify="center">
+                          <Image src={p.imgSrc} alt={p.title} borderRadius="md" objectFit="cover" boxSize="50%" />
+                        </Flex>
+                      )}
+                      <Stack spacing={1}>
+                        <Heading size="md" color="whiteAlpha.800">{p.title}</Heading>
+                        <Tag w="fit-content" colorScheme="orange" variant="subtle">
+                          {p.type}
+                        </Tag>
+                        <Text color="whiteAlpha.800" fontSize="sm">
+                          {p.desc}
+                        </Text>
+                        <Wrap pt={1}>
+                          {p.tags?.map((t) => (
+                            <WrapItem key={t}>
+                              <Tag size="sm" variant="outline" colorScheme="teal">
+                                {t}
+                              </Tag>
+                            </WrapItem>
+                          ))}
+                        </Wrap>
+                      </Stack>
+                    </VStack>
+                  </CardBody>
+                </Card>
+              );
+            })}
+          </SimpleGrid>
+
+          {filtered.length === 0 && (
+            <Text color="whiteAlpha.700" fontStyle="italic">No projects match your filters.</Text>
+          )}
+        </VStack>
+      </Collapse>
 
       {/* Filters Drawer */}
       <Drawer isOpen={isFilterOpen} placement="right" onClose={closeFilters} size="md">
@@ -380,6 +378,6 @@ export default function AllProjects() {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-    </Box>
+    </VStack>
   );
 }
