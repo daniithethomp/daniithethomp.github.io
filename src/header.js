@@ -48,10 +48,6 @@ export default function Header() {
               <Image boxSize="20px" src="/linkedin-logo.png" alt="LinkedIn Logo" />
               <Text display={{ base: 'none', sm: 'inline' }}>Danii Thompson</Text>
             </Link>
-            <HStack gap={2}>
-              <Image boxSize="20px" src="/discord-mark-white.png" alt="Discord Logo" objectFit="contain" />
-              <Text display={{ base: 'none', sm: 'inline' }}>fourshadows4</Text>
-            </HStack>
           </HStack>
         </VStack>
       </Flex>
